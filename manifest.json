@@ -1,0 +1,23 @@
+{
+  "name": "التسجيل المبكر للحمل - وزارة الصحة",
+  "short_name": "تسجيل الحمل",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#faf8f9",
+  "theme_color": "#7b5c7a",
+  "description": "مبادرة التسجيل المبكر للحمل لوزارة الصحة",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "lang": "ar",
+  "dir": "rtl"
+}
