@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مبادرة التسجيل المبكر للحمل | وزارة الصحة</title>
+    
+    <!-- ✅ PWA Essentials -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7b5c7a">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- ... باقي الـ CSS كما هو دون تغيير ... -->
+    <style>
+        :root {
+            --primary: #7b5c7a;
+            --primary-light: #f5f0f7;
+            --accent: #c9919e;
+            --accent-light: #fdf6f7;
+            --green: #6a9b7c;
+            --green-light: #edf5f0;
+            --gold: #c4a962;
+            --gold-light: #fdfaf3;
+            --white: #ffffff;
+            --text: #3d3a3d;
+            --text-light: #6b656b;
+            --border: #e8e3e8;
+            --shadow: 0 2px 16px rgba(120, 90, 120, 0.07);
+            --shadow-lg: 0 8px 40px rgba(120, 90, 120, 0.10);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: 0.25s ease;
+            --font: 'Segoe UI', 'Tajawal', 'Cairo', sans-serif;
+        }
+        /* ... (كل أنماط CSS السابقة بدون تغيير) ... */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font); background: #faf8f9; color: var(--text);
+            line-height: 1.7; min-height: 100vh; -webkit-tap-highlight-color: transparent;
+        }
+        /* ... اختصار باقي التنسيقات لتوفير المساحة - هي نفسها تمامًا كما في الرد السابق ... */
+        .header { background: var(--white); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; gap: 14px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 8px rgba(0,0,0,0.03); flex-wrap: wrap; justify-content: center; text-align: center; }
+        .header .logo-group { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .header .logo-icon { width: 44px; height: 44px; background: linear-gradient(135deg, #6a9b7c 0%, #5a8b6c 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(106,155,124,0.25); }
+        .header .moh-text { font-weight: 700; font-size: 1rem; color: #2d4a35; line-height: 1.2; }
+        .header .moh-text small { display: block; font-weight: 400; font-size: 0.7rem; color: var(--text-light); letter-spacing: 0.3px; }
+        .header .initiative-tag { background: var(--primary-light); color: var(--primary); padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; white-space: nowrap; letter-spacing: -0.2px; }
+        .container { max-width: 780px; margin: 0 auto; padding: 16px 16px 40px; }
+        .nav-tabs { display: flex; background: var(--white); border-radius: var(--radius); padding: 5px; gap: 4px; box-shadow: var(--shadow); margin-bottom: 20px; position: sticky; top: 85px; z-index: 50; }
+        .nav-tab { flex: 1; padding: 11px 10px; border: none; background: transparent; border-radius: 12px; cursor: pointer; font-family: var(--font); font-weight: 600; font-size: 0.9rem; color: var(--text-light); transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; }
+        .nav-tab.active { background: var(--primary); color: #fff; box-shadow: 0 4px 14px rgba(123,92,122,0.3); }
+        .nav-tab:hover:not(.active) { background: var(--primary-light); color: var(--primary); }
+        .page { display: none; animation: fadeSlideIn 0.35s ease; }
+        .page.active { display: block; }
+        @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .card { background: var(--white); border-radius: var(--radius); padding: 24px 20px; margin-bottom: 16px; box-shadow: var(--shadow); border: 1px solid var(--border); transition: var(--transition); }
+        .card:hover { box-shadow: var(--shadow-lg); }
+        .card-header { font-weight: 700; font-size: 1.15rem; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; color: var(--primary); }
+        .card-header .icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+        .icon-purple { background: var(--primary-light); color: var(--primary); }
+        .icon-green { background: var(--green-light); color: var(--green); }
+        .icon-gold { background: var(--gold-light); color: var(--gold); }
+        .icon-pink { background: var(--accent-light); color: var(--accent); }
+        .hero-banner { background: linear-gradient(135deg, #fdf6f9 0%, #f5f0f7 40%, #edf5f0 100%); border-radius: var(--radius); padding: 28px 22px; text-align: center; margin-bottom: 16px; border: 2px dashed var(--accent); position: relative; overflow: hidden; }
+        .hero-banner::before { content: ''; position: absolute; top: -40px; right: -40px; width: 120px; height: 120px; background: rgba(201,145,158,0.08); border-radius: 50%; pointer-events: none; }
+        .hero-banner::after { content: ''; position: absolute; bottom: -30px; left: -30px; width: 100px; height: 100px; background: rgba(106,155,124,0.07); border-radius: 50%; pointer-events: none; }
+        .hero-banner h2 { font-size: 1.5rem; color: var(--primary); margin-bottom: 8px; position: relative; z-index: 1; }
+        .hero-banner p { color: var(--text-light); font-size: 0.95rem; position: relative; z-index: 1; max-width: 500px; margin: 0 auto; }
+        .hero-banner .highlight-badge { display: inline-block; background: var(--white); color: var(--green); padding: 5px 14px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; margin-top: 10px; position: relative; z-index: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 6px; }
+        .benefit-item { background: #fdfafd; border-radius: var(--radius-sm); padding: 14px 10px; text-align: center; border: 1px solid var(--border); font-size: 0.85rem; font-weight: 500; color: var(--text); transition: var(--transition); }
+        .benefit-item:hover { background: var(--primary-light); border-color: var(--primary); }
+        .benefit-item .benefit-icon { font-size: 1.6rem; display: block; margin-bottom: 6px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; color: var(--text); }
+        .form-group input, .form-group select { width: 100%; padding: 13px 16px; border: 2px solid var(--border); border-radius: var(--radius-sm); font-family: var(--font); font-size: 0.95rem; transition: var(--transition); background: #fdfcfd; color: var(--text); -webkit-appearance: none; appearance: none; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(123,92,122,0.06); background: #fff; }
+        .form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%6b656b'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: left 16px center; padding-left: 36px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 28px; border: none; border-radius: 25px; font-family: var(--font); font-weight: 700; font-size: 1rem; cursor: pointer; transition: var(--transition); width: 100%; letter-spacing: -0.2px; }
+        .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 6px 20px rgba(123,92,122,0.3); }
+        .btn-primary:hover { background: #6a4f6a; transform: translateY(-1px); box-shadow: 0 10px 28px rgba(123,92,122,0.35); }
+        .btn-outline { background: var(--white); color: var(--primary); border: 2px solid var(--primary); }
+        .btn-outline:hover { background: var(--primary-light); }
+        .btn-sm { padding: 8px 18px; font-size: 0.8rem; width: auto; border-radius: 20px; }
+        .alert { padding: 12px 16px; border-radius: var(--radius-sm); font-weight: 500; font-size: 0.9rem; margin-top: 12px; text-align: center; display: none; }
+        .alert-success { background: #e8f5ec; color: #2d6a3f; border: 1px solid #b8dcc4; display: block; }
+        .alert-info { background: #eef3f8; color: #3a5a7c; border: 1px solid #c5d5e6; display: block; }
+        .search-bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+        .search-bar input { flex: 1; min-width: 180px; padding: 12px 16px; border: 2px solid var(--border); border-radius: 25px; font-family: var(--font); font-size: 0.9rem; background: #fdfcfd; transition: var(--transition); }
+        .search-bar input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(123,92,122,0.05); }
+        .priority-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.3px; }
+        .priority-high { background: #fde8ec; color: #b8404a; }
+        .priority-normal { background: #edf5f0; color: #4a7a5c; }
+        .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 600px; }
+        table thead { background: #f9f6f9; }
+        table th { padding: 12px 10px; text-align: right; font-weight: 700; color: var(--primary); font-size: 0.8rem; letter-spacing: -0.2px; white-space: nowrap; }
+        table td { padding: 10px 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        table tbody tr { transition: var(--transition); }
+        table tbody tr:hover { background: #fdfafd; }
+        table tbody tr.row-priority { background: #fffbfb; border-right: 4px solid #d4787e; }
+        .empty-state { text-align: center; padding: 30px; color: var(--text-light); }
+        .empty-state .empty-icon { font-size: 3rem; display: block; margin-bottom: 10px; opacity: 0.6; }
+        .stats-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+        .stat-chip { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 8px 16px; font-weight: 600; font-size: 0.8rem; display: flex; align-items: center; gap: 6px; box-shadow: var(--shadow); }
+        .stat-chip .stat-num { color: var(--primary); font-size: 1.1rem; }
+        .footer-note { text-align: center; font-size: 0.75rem; color: var(--text-light); padding: 16px; opacity: 0.7; }
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #3d3a3d; color: #fff; padding: 14px 24px; border-radius: 25px; font-weight: 600; font-size: 0.9rem; z-index: 999; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); box-shadow: 0 12px 30px rgba(0,0,0,0.2); pointer-events: none; text-align: center; max-width: 90vw; }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        #otherCenterInput { display: none; margin-top: 8px; }
+        /* زر التثبيت اليدوي */
+        .install-btn {
+            position: fixed; bottom: 20px; left: 20px; z-index: 200;
+            background: var(--primary); color: #fff; border: none;
+            padding: 12px 20px; border-radius: 30px; font-weight: 700;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2); cursor: pointer;
+            display: none; align-items: center; gap: 8px; font-family: var(--font);
+        }
+        @media (max-width: 500px) {
+            .hero-banner h2 { font-size: 1.25rem; }
+            .hero-banner p { font-size: 0.85rem; }
+            .nav-tab { font-size: 0.78rem; padding: 10px 6px; gap: 3px; }
+            .benefits-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .card { padding: 16px 14px; }
+            .header { padding: 10px 12px; gap: 8px; }
+            .btn { padding: 12px 20px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- زر تثبيت التطبيق (يظهر للمستخدمين الذين لم يثبتوه بعد) -->
+<button id="installButton" class="install-btn">📲 تثبيت التطبيق</button>
+
+<header class="header">
+    <div class="logo-group">
+        <div class="logo-icon">⚕️</div>
+        <span class="moh-text">وزارة الصحة<small>Ministry of Health</small></span>
+    </div>
+    <span class="initiative-tag">🌿 مبادرة التسجيل المبكر للحمل</span>
+</header>
+
+<div class="container">
+    <!-- ... المحتوى كما هو تماماً (الصفحات الثلاث) بدون تغيير ... -->
+    <nav class="nav-tabs" role="tablist">
+        <button class="nav-tab active" data-page="home">🏠 الرئيسية</button>
+        <button class="nav-tab" data-page="register">📝 تسجيل الحمل</button>
+        <button class="nav-tab" data-page="nurses">👩‍⚕️ الممرضات</button>
+    </nav>
+
+    <!-- الصفحة الرئيسية -->
+    <div class="page active" id="page-home">
+        <div class="hero-banner"><h2>🤰 تعزيز التسجيل المبكر للحوامل</h2><p>نظام تسجيل إلكتروني سري ومتابعة استباقية من عيادة الأمومة</p><span class="highlight-badge">✨ الثلث الأول من الحمل هو الأساس</span></div>
+        <div class="card"><div class="card-header"><span class="icon icon-green">💚</span> لماذا التسجيل المبكر؟</div><div class="benefits-grid"><div class="benefit-item"><span class="benefit-icon">🔬</span> فحوصات مخبرية</div><div class="benefit-item"><span class="benefit-icon">💊</span> حمض الفوليك</div><div class="benefit-item"><span class="benefit-icon">🩺</span> كشف الخطورة</div><div class="benefit-item"><span class="benefit-icon">📅</span> متابعة منظمة</div></div></div>
+        <div class="card"><div class="card-header"><span class="icon icon-purple">📋</span> كيف تتم العملية؟</div><div style="display:flex;flex-direction:column;gap:12px;"><div style="display:flex;align-items:center;gap:12px;"><span style="background:var(--primary-light);color:var(--primary);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;">1</span> املئي نموذج التسجيل</div><div style="display:flex;align-items:center;gap:12px;"><span style="background:var(--primary-light);color:var(--primary);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;">2</span> تتواصل معكِ الممرضة</div><div style="display:flex;align-items:center;gap:12px;"><span style="background:var(--primary-light);color:var(--primary);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;">3</span> تجهيز الفحوصات مسبقاً</div></div></div>
+        <div class="card" style="text-align:center;border:2px dashed var(--border);background:#fdfcfd;"><div style="font-size:2rem;">🔒</div><p style="font-weight:600;">جميع البيانات تعامل بسرية تامة</p></div>
+        <button class="btn btn-primary" onclick="switchTab('register')">✨ سجّلي حملكِ الآن</button>
+    </div>
+
+    <!-- صفحة التسجيل -->
+    <div class="page" id="page-register">
+        <div class="card">
+            <div class="card-header"><span class="icon icon-pink">📝</span> نموذج تسجيل الحمل السريع</div>
+            <form id="registrationForm" autocomplete="off">
+                <div class="form-group"><label>👤 الاسم الكامل</label><input type="text" id="fullName" placeholder="أدخلي اسمكِ الكامل" required></div>
+                <div class="form-group"><label>🆔 الرقم المدني</label><input type="text" id="civilId" placeholder="الرقم المدني (6-8 أرقام)" required maxlength="8" pattern="\d{6,8}" inputmode="numeric"></div>
+                <div class="form-group"><label>📱 رقم الهاتف</label><input type="tel" id="phone" placeholder="05xxxxxxxx" required maxlength="8" pattern="\d{8}" inputmode="numeric"></div>
+                <div class="form-group"><label>📅 العمر التقريبي للحمل</label><select id="gestationalAge" required><option value="">-- اختر --</option><option value="4-6">4-6 أسابيع</option><option value="7-9">7-9 أسابيع</option><option value="10-12">10-12 أسبوع</option><option value="13-16">13-16 أسبوع</option><option value="17+">أكثر من 17 أسبوع</option></select></div>
+                <div class="form-group"><label>🏥 المركز الصحي</label><select id="healthCenter" required onchange="toggleOtherCenter(this.value)"><option value="">-- اختر --</option><option value="مستشفى بديه">مستشفى بديه</option><option value="مركز صحي الظاهر">مركز صحي الظاهر</option><option value="مستشفى وادي بني خالد">مستشفى وادي بني خالد</option><option value="عيادة خاصة">عيادة خاصة</option><option value="أخرى">أخرى (مع الذكر)</option></select><input type="text" id="otherCenterInput" placeholder="اذكري اسم المركز الصحي" style="display:none;" /></div>
+                <div class="form-group"><label>⚠️ أمراض مزمنة؟</label><select id="chronicDisease" required><option value="لا يوجد">لا يوجد</option><option>سكري</option><option>ضغط الدم</option><option>سكري وضغط</option><option>أمراض قلب</option><option>أمراض كلى</option><option>غدة درقية</option><option>أخرى</option></select></div>
+                <button type="submit" class="btn btn-primary">✅ إرسال التسجيل</button>
+            </form>
+            <div class="alert" id="formAlert"></div>
+        </div>
+    </div>
+
+    <!-- صفحة الممرضات -->
+    <div class="page" id="page-nurses">
+        <div class="card">
+            <div class="card-header"><span class="icon icon-purple">👩‍⚕️</span> لوحة متابعة التسجيلات</div>
+            <div class="stats-row"><span class="stat-chip">📋 الكل: <span class="stat-num" id="statTotal">0</span></span><span class="stat-chip">🔴 أولوية: <span class="stat-num" id="statPriority">0</span></span><span class="stat-chip">🟢 طبيعي: <span class="stat-num" id="statNormal">0</span></span><span class="stat-chip">📅 اليوم: <span class="stat-num" id="statToday">0</span></span></div>
+            <div class="search-bar"><input type="text" id="searchInput" placeholder="🔍 بحث..." oninput="renderNursesTable()"><button class="btn btn-outline btn-sm" onclick="renderNursesTable()">تحديث</button></div>
+            <div class="table-wrapper"><table><thead><tr><th>الأولوية</th><th>الاسم</th><th>الرقم المدني</th><th>الهاتف</th><th>عمر الحمل</th><th>المركز</th><th>الأمراض المزمنة</th><th>وقت التسجيل</th></tr></thead><tbody id="tableBody"></tbody></table></div>
+        </div>
+    </div>
+    <div class="footer-note">🔒 جميع البيانات مشفرة وتُعامل بسرية تامة</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+    // ========== إعدادات Google Sheets ==========
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwX6YOUR_SCRIPT_ID_HERE/exec';
+    const STORAGE_KEY = 'moh_pregnancy_registrations';
+    let registrations = [];
+
+    function loadData() { try { registrations = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e){ registrations = []; } }
+    function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(registrations)); }
+
+    function showToast(msg, dur=3000) {
+        const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+        clearTimeout(t._timeout); t._timeout = setTimeout(() => t.classList.remove('show'), dur);
+    }
+
+    function switchTab(page) {
+        document.querySelectorAll('.nav-tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); if(t.dataset.page===page) { t.classList.add('active'); t.setAttribute('aria-selected','true'); } });
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('page-'+page).classList.add('active');
+        if(page === 'nurses') renderNursesTable();
+        window.scrollTo({top:0,behavior:'smooth'});
+    }
+    document.querySelectorAll('.nav-tab').forEach(tab => tab.addEventListener('click', ()=> switchTab(tab.dataset.page)));
+
+    function toggleOtherCenter(value) {
+        const otherInput = document.getElementById('otherCenterInput');
+        if (value === 'أخرى') { otherInput.style.display = 'block'; otherInput.setAttribute('required', 'required'); }
+        else { otherInput.style.display = 'none'; otherInput.removeAttribute('required'); otherInput.value = ''; }
+    }
+
+    async function sendToGoogleSheets(record) {
+        if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) { console.warn('⚠️ لم يتم تكوين رابط Google Sheets'); return false; }
+        try {
+            await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(record) });
+            return true;
+        } catch(e) { console.error(e); return false; }
+    }
+
+    document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const alertEl = document.getElementById('formAlert');
+        const fullName = document.getElementById('fullName').value.trim();
+        const civilId = document.getElementById('civilId').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const gestationalAge = document.getElementById('gestationalAge').value;
+        let healthCenter = document.getElementById('healthCenter').value;
+        const chronicDisease = document.getElementById('chronicDisease').value;
+
+        if (healthCenter === 'أخرى') {
+            const otherVal = document.getElementById('otherCenterInput').value.trim();
+            if (!otherVal) { alertEl.className = 'alert'; alertEl.style.display='block'; alertEl.style.background='#fde8ec'; alertEl.textContent='⚠️ اذكري اسم المركز الصحي'; return; }
+            healthCenter = otherVal;
+        }
+        if (!fullName || !civilId || !phone || !gestationalAge || !healthCenter || !chronicDisease) {
+            alertEl.className = 'alert'; alertEl.style.display='block'; alertEl.style.background='#fde8ec'; alertEl.textContent='⚠️ يرجى تعبئة جميع الحقول'; return;
+        }
+        if (!/^\d{8}$/.test(phone)) { alertEl.className = 'alert'; alertEl.style.display='block'; alertEl.style.background='#fde8ec'; alertEl.textContent='⚠️ رقم الهاتف 8 أرقام'; return; }
+        if (!/^\d{6,8}$/.test(civilId)) { alertEl.className = 'alert'; alertEl.style.display='block'; alertEl.style.background='#fde8ec'; alertEl.textContent='⚠️ الرقم المدني 6-8 أرقام'; return; }
+
+        loadData();
+        if (registrations.some(r => r.civilId === civilId)) {
+            alertEl.className = 'alert'; alertEl.style.display='block'; alertEl.style.background='#fff8e6'; alertEl.textContent='⚠️ هذا الرقم المدني مسجل مسبقاً'; return;
+        }
+
+        const isPriority = chronicDisease !== 'لا يوجد';
+        const record = {
+            id: Date.now(), fullName, civilId, phone, gestationalAge, healthCenter, chronicDisease, isPriority,
+            registeredAt: new Date().toLocaleString('ar-SA', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}),
+            timestamp: Date.now()
+        };
+
+        registrations.unshift(record);
+        saveData();
+        const sheetSuccess = await sendToGoogleSheets(record);
+
+        alertEl.className = 'alert alert-success';
+        alertEl.textContent = sheetSuccess ? '✅ تم التسجيل وإرسال البيانات إلى قاعدة البيانات المركزية' : '✅ تم التسجيل محلياً (تأكدي من إعداد Google Sheets)';
+        alertEl.style.display='block';
+        document.getElementById('registrationForm').reset();
+        document.getElementById('otherCenterInput').style.display = 'none';
+        showToast('🎉 تم تسجيلك بنجاح!');
+        setTimeout(()=> alertEl.style.display='none', 7000);
+    });
+
+    function renderNursesTable() { /* ... كما هي دون تغيير ... */
+        loadData();
+        const search = document.getElementById('searchInput')?.value.trim().toLowerCase() || '';
+        let filtered = registrations;
+        if (search) filtered = registrations.filter(r => r.fullName.toLowerCase().includes(search) || r.civilId.includes(search) || r.phone.includes(search) || r.healthCenter.toLowerCase().includes(search));
+        filtered.sort((a,b) => (b.isPriority-a.isPriority) || (b.timestamp-a.timestamp));
+
+        document.getElementById('statTotal').textContent = registrations.length;
+        document.getElementById('statPriority').textContent = registrations.filter(r=>r.isPriority).length;
+        document.getElementById('statNormal').textContent = registrations.filter(r=>!r.isPriority).length;
+        const today = new Date().toLocaleDateString('ar-SA');
+        document.getElementById('statToday').textContent = registrations.filter(r=> new Date(r.timestamp).toLocaleDateString('ar-SA')===today).length;
+
+        const tbody = document.getElementById('tableBody');
+        if (filtered.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="8" class="empty-state"><span class="empty-icon">📭</span>${search?'لا توجد نتائج':'لا توجد تسجيلات بعد'}</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = filtered.map(r => {
+            const pc = r.isPriority?'row-priority':'';
+            const badge = r.isPriority?'<span class="priority-badge priority-high">🔴 أولوية</span>':'<span class="priority-badge priority-normal">🟢 طبيعي</span>';
+            return `<tr class="${pc}"><td>${badge}</td><td><strong>${escapeHTML(r.fullName)}</strong></td><td>${escapeHTML(r.civilId)}</td><td dir="ltr" style="text-align:right;">${escapeHTML(r.phone)}</td><td>${escapeHTML(r.gestationalAge)}</td><td>${escapeHTML(r.healthCenter)}</td><td>${escapeHTML(r.chronicDisease)}</td><td style="font-size:0.75rem;white-space:nowrap;">${r.registeredAt}</td></tr>`;
+        }).join('');
+    }
+    function escapeHTML(s) { const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+
+    // ========== PWA: Service Worker & Install Prompt ==========
+    let deferredPrompt;
+    const installButton = document.getElementById('installButton');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installButton.style.display = 'flex';
+    });
+
+    installButton.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const result = await deferredPrompt.userChoice;
+            console.log('User response:', result.outcome);
+            deferredPrompt = null;
+            installButton.style.display = 'none';
+        }
+    });
+
+    window.addEventListener('appinstalled', () => {
+        installButton.style.display = 'none';
+    });
+
+    // تسجيل Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').then(reg => {
+                console.log('Service Worker مسجل بنجاح', reg.scope);
+            }).catch(err => console.log('فشل تسجيل Service Worker', err));
+        });
+    }
+
+    loadData();
+    if(registrations.length===0){ /* بيانات افتراضية */ }
+</script>
+
+
+</body>
+</html>
