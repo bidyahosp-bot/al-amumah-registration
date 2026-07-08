@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مبادرة التسجيل المبكر للحمل | وزارة الصحة</title>
     
-    <!-- PWA Essentials -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#7b5c7a">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -65,7 +64,7 @@
             justify-content: center;
         }
         .header .logo-img {
-            height: 48px;
+            height: 70px;  /* ✅ تم تكبير الشعار */
             width: auto;
             flex-shrink: 0;
         }
@@ -112,7 +111,7 @@
             box-shadow: var(--shadow);
             margin-bottom: 20px;
             position: sticky;
-            top: 80px;
+            top: 95px;  /* ✅ تعديل ليتناسب مع حجم الهيدر الجديد */
             z-index: 50;
         }
         .nav-tab {
@@ -245,7 +244,7 @@
         .alert-success { background: #e8f5ec; color: #2d6a3f; display: block; }
         .alert-error { background: #fde8ec; color: #b8404a; display: block; }
 
-        /* ============ MODAL (نافذة كلمة المرور) ============ */
+        /* ============ MODAL ============ */
         .modal-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.5); z-index: 500;
@@ -313,7 +312,9 @@
             .hero-banner h2 { font-size: 1.25rem; }
             .nav-tab { font-size: 0.78rem; padding: 10px 6px; }
             .card { padding: 16px 14px; }
-            .header .logo-img { height: 36px; }
+            .header { padding: 8px 12px; }
+            .header .logo-img { height: 55px; }  /* ✅ شعار أكبر للجوال */
+            .nav-tabs { top: 78px; }  /* ✅ تعديل للجوال */
         }
     </style>
 </head>
@@ -328,7 +329,7 @@
     <button class="logout-btn-header" id="logoutBtnHeader" onclick="handleLogout()">🚪 خروج</button>
 </header>
 
-<!-- ==================== MODAL: كلمة المرور ==================== -->
+<!-- ==================== MODAL ==================== -->
 <div class="modal-overlay" id="passwordModal">
     <div class="modal">
         <div class="modal-icon">🔐</div>
@@ -351,14 +352,13 @@
 
 <!-- ==================== MAIN CONTAINER ==================== -->
 <div class="container">
-    <!-- ============ NAVIGATION TABS ============ -->
     <nav class="nav-tabs" role="tablist">
         <button class="nav-tab active" data-page="home">🏠 الرئيسية</button>
         <button class="nav-tab" data-page="register">📝 تسجيل الحمل</button>
         <button class="nav-tab" data-page="nurses" id="nursesTab">👩‍⚕️ لوحة التحكم</button>
     </nav>
 
-    <!-- ============ PAGE: HOME ============ -->
+    <!-- الصفحة الرئيسية -->
     <div class="page active" id="page-home">
         <div class="hero-banner">
             <h2>🤰 تعزيز التسجيل المبكر للحوامل</h2>
@@ -382,21 +382,17 @@
                 <div style="display:flex;align-items:center;gap:12px;"><span style="background:var(--primary-light);color:var(--primary);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;">3</span> تجهيز الفحوصات مسبقاً</div>
             </div>
         </div>
-        <div class="card" style="text-align:center;border:2px dashed var(--border);background:#fdfcfd;">
-            <div style="font-size:2rem;">🔒</div>
-            <p style="font-weight:600;">جميع البيانات تعامل بسرية تامة</p>
-        </div>
         <button class="btn btn-primary" onclick="switchTab('register')">✨ سجّلي حملكِ الآن</button>
     </div>
 
-    <!-- ============ PAGE: REGISTER ============ -->
+    <!-- صفحة التسجيل -->
     <div class="page" id="page-register">
         <div class="card">
             <div class="card-header"><span class="icon icon-pink">📝</span> نموذج تسجيل الحمل السريع</div>
             <form id="registrationForm" autocomplete="off">
                 <div class="form-group"><label>👤 الاسم الكامل</label><input type="text" id="fullName" placeholder="أدخلي اسمكِ الكامل" required></div>
                 <div class="form-group"><label>🆔 الرقم المدني</label><input type="text" id="civilId" placeholder="الرقم المدني (6-8 أرقام)" required maxlength="8" pattern="\d{6,8}" inputmode="numeric"></div>
-                <div class="form-group"><label>📱 رقم الهاتف</label><input type="tel" id="phone" placeholder="05xxxxxxxx" required maxlength="8" pattern="\d{8}" inputmode="numeric"></div>
+                <div class="form-group"><label>📱 رقم الهاتف</label><input type="tel" id="phone" placeholder="9xxxxxxxx" required maxlength="8" pattern="\d{8}" inputmode="numeric"></div>
                 <div class="form-group"><label>📅 العمر التقريبي للحمل</label><select id="gestationalAge" required><option value="">-- اختر --</option><option value="4-6">4-6 أسابيع</option><option value="7-9">7-9 أسابيع</option><option value="10-12">10-12 أسبوع</option><option value="13-16">13-16 أسبوع</option><option value="17+">أكثر من 17 أسبوع</option></select></div>
                 <div class="form-group"><label>🏥 المركز الصحي</label><select id="healthCenter" required onchange="toggleOtherCenter(this.value)"><option value="">-- اختر --</option><option value="مستشفى بديه">مستشفى بديه</option><option value="مركز صحي الظاهر">مركز صحي الظاهر</option><option value="مستشفى وادي بني خالد">مستشفى وادي بني خالد</option><option value="عيادة خاصة">عيادة خاصة</option><option value="أخرى">أخرى (مع الذكر)</option></select><input type="text" id="otherCenterInput" placeholder="اذكري اسم المركز الصحي" style="display:none;"></div>
                 <div class="form-group"><label>⚠️ أمراض مزمنة؟</label><select id="chronicDisease" required><option value="لا يوجد">لا يوجد</option><option>سكري</option><option>ضغط الدم</option><option>سكري وضغط</option><option>أمراض قلب</option><option>أمراض كلى</option><option>غدة درقية</option><option>أخرى</option></select></div>
@@ -406,7 +402,7 @@
         </div>
     </div>
 
-    <!-- ============ PAGE: NURSES (لوحة التحكم) ============ -->
+    <!-- لوحة التحكم -->
     <div class="page" id="page-nurses">
         <div class="card">
             <div class="card-header">
@@ -439,33 +435,24 @@
 
 <script>
     // ============ CONFIGURATION ============
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwX6YOUR_SCRIPT_ID_HERE/exec';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwG6PF3D4AKxeGMjMDjhNbu_5YDIWuWqo9GmgcX5jo-BiA_lmj5FnsTV757UqrrpXYB/exec';
     const STORAGE_KEY = 'moh_pregnancy_registrations';
     const AUTH_KEY = 'moh_nurse_authenticated';
-
-    // 🔐 كلمة المرور (يمكنك تغييرها هنا فقط)
     const VALID_PASSWORD = 'nurse123';
 
     let registrations = [];
 
-    // ============ DATA ============
     function loadData() { try { registrations = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e) { registrations = []; } }
     function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(registrations)); }
 
-    // ============ AUTH ============
     function isAuthenticated() { return sessionStorage.getItem(AUTH_KEY) === 'true'; }
     function setAuthenticated(val) { if(val) sessionStorage.setItem(AUTH_KEY, 'true'); else sessionStorage.removeItem(AUTH_KEY); }
 
     function updateUIForAuth() {
-        const logoutBtn = document.getElementById('logoutBtnHeader');
-        if (isAuthenticated()) {
-            logoutBtn.classList.add('show');
-        } else {
-            logoutBtn.classList.remove('show');
-        }
+        const btn = document.getElementById('logoutBtnHeader');
+        if (isAuthenticated()) btn.classList.add('show'); else btn.classList.remove('show');
     }
 
-    // ============ MODAL ============
     function showPasswordModal() {
         document.getElementById('passwordModal').classList.add('show');
         document.getElementById('modalPassword').focus();
@@ -475,7 +462,6 @@
 
     function closePasswordModal() {
         document.getElementById('passwordModal').classList.remove('show');
-        // إذا كان المستخدم في صفحة nurses ولم يسجل دخول، ارجعه للرئيسية
         if (!isAuthenticated() && document.getElementById('page-nurses').classList.contains('active')) {
             switchTab('home');
         }
@@ -488,89 +474,55 @@
         else { inp.type = 'password'; btn.textContent = '👁️'; }
     }
 
-    // معالجة نموذج كلمة المرور
     document.getElementById('passwordForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        const password = document.getElementById('modalPassword').value.trim();
+        const pw = document.getElementById('modalPassword').value.trim();
         const alertEl = document.getElementById('modalAlert');
-
-        if (password === VALID_PASSWORD) {
-            setAuthenticated(true);
-            updateUIForAuth();
-            closePasswordModal();
-            switchTab('nurses');
-            showToast('✅ تم الدخول إلى لوحة التحكم');
+        if (pw === VALID_PASSWORD) {
+            setAuthenticated(true); updateUIForAuth(); closePasswordModal();
+            switchTab('nurses'); showToast('✅ تم الدخول إلى لوحة التحكم');
         } else {
-            alertEl.className = 'alert alert-error';
-            alertEl.textContent = '❌ كلمة المرور غير صحيحة';
-            alertEl.style.display = 'block';
+            alertEl.className = 'alert alert-error'; alertEl.textContent = '❌ كلمة المرور غير صحيحة'; alertEl.style.display = 'block';
         }
     });
 
     function handleLogout() {
-        setAuthenticated(false);
-        updateUIForAuth();
-        closePasswordModal();
-        switchTab('home');
-        showToast('👋 تم تسجيل الخروج');
+        setAuthenticated(false); updateUIForAuth(); closePasswordModal();
+        switchTab('home'); showToast('👋 تم تسجيل الخروج');
     }
 
-    // ============ TOAST ============
     function showToast(msg, dur=3000) {
-        const t = document.getElementById('toast');
-        t.textContent = msg; t.classList.add('show');
-        clearTimeout(t._timeout);
-        t._timeout = setTimeout(() => t.classList.remove('show'), dur);
+        const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+        clearTimeout(t._timeout); t._timeout = setTimeout(() => t.classList.remove('show'), dur);
     }
 
-    // ============ NAVIGATION ============
     function switchTab(pageName) {
-        // إذا طلب لوحة التحكم ولم يسجل دخول → نافذة كلمة المرور
-        if (pageName === 'nurses' && !isAuthenticated()) {
-            showPasswordModal();
-            return; // لا ننتقل للصفحة
-        }
-
-        // تحديث التبويبات
+        if (pageName === 'nurses' && !isAuthenticated()) { showPasswordModal(); return; }
         document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.classList.remove('active');
-            tab.setAttribute('aria-selected', 'false');
-            if (tab.dataset.page === pageName) {
-                tab.classList.add('active');
-                tab.setAttribute('aria-selected', 'true');
-            }
+            tab.classList.remove('active'); tab.setAttribute('aria-selected','false');
+            if (tab.dataset.page === pageName) { tab.classList.add('active'); tab.setAttribute('aria-selected','true'); }
         });
-
-        // تحديث الصفحات
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         const target = document.getElementById('page-' + pageName);
         if (target) target.classList.add('active');
-
         if (pageName === 'nurses') renderNursesTable();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    document.querySelectorAll('.nav-tab').forEach(tab => {
-        tab.addEventListener('click', () => switchTab(tab.dataset.page));
-    });
+    document.querySelectorAll('.nav-tab').forEach(tab => tab.addEventListener('click', () => switchTab(tab.dataset.page)));
 
-    // ============ OTHER CENTER ============
     function toggleOtherCenter(val) {
         const inp = document.getElementById('otherCenterInput');
-        if (val === 'أخرى') { inp.style.display = 'block'; inp.setAttribute('required', 'required'); }
+        if (val === 'أخرى') { inp.style.display = 'block'; inp.setAttribute('required','required'); }
         else { inp.style.display = 'none'; inp.removeAttribute('required'); inp.value = ''; }
     }
 
-    // ============ GOOGLE SHEETS ============
     async function sendToGoogleSheets(record) {
-        if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('https://script.google.com/macros/s/AKfycbwG6PF3D4AKxeGMjMDjhNbu_5YDIWuWqo9GmgcX5jo-BiA_lmj5FnsTV757UqrrpXYB/exec')) return false;
-        try {
-            await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(record) });
-            return true;
-        } catch(e) { return false; }
+        if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) return false;
+        try { await fetch(GOOGLE_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(record) }); return true; }
+        catch(e) { return false; }
     }
 
-    // ============ REGISTRATION FORM ============
     document.getElementById('registrationForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         const alertEl = document.getElementById('formAlert');
@@ -581,43 +533,31 @@
         let hc = document.getElementById('healthCenter').value;
         const cd = document.getElementById('chronicDisease').value;
 
-        if (hc === 'أخرى') {
-            const ov = document.getElementById('otherCenterInput').value.trim();
-            if (!ov) { alertEl.className = 'alert alert-error'; alertEl.textContent = '⚠️ اذكري اسم المركز'; return; }
-            hc = ov;
-        }
-        if (!fn || !cid || !ph || !ga || !hc || !cd) {
-            alertEl.className = 'alert alert-error'; alertEl.textContent = '⚠️ جميع الحقول مطلوبة'; return;
-        }
-        if (!/^\d{8}$/.test(ph)) { alertEl.className = 'alert alert-error'; alertEl.textContent = '⚠️ الهاتف 8 أرقام'; return; }
-        if (!/^\d{6,8}$/.test(cid)) { alertEl.className = 'alert alert-error'; alertEl.textContent = '⚠️ الرقم المدني 6-8 أرقام'; return; }
+        if (hc === 'أخرى') { const ov = document.getElementById('otherCenterInput').value.trim(); if (!ov) { alertEl.className='alert alert-error'; alertEl.textContent='⚠️ اذكري اسم المركز'; return; } hc = ov; }
+        if (!fn || !cid || !ph || !ga || !hc || !cd) { alertEl.className='alert alert-error'; alertEl.textContent='⚠️ جميع الحقول مطلوبة'; return; }
+        if (!/^\d{8}$/.test(ph)) { alertEl.className='alert alert-error'; alertEl.textContent='⚠️ الهاتف 8 أرقام'; return; }
+        if (!/^\d{6,8}$/.test(cid)) { alertEl.className='alert alert-error'; alertEl.textContent='⚠️ الرقم المدني 6-8 أرقام'; return; }
 
         loadData();
-        if (registrations.some(r => r.civilId === cid)) {
-            alertEl.className = 'alert alert-error'; alertEl.textContent = '⚠️ الرقم المدني مسجل مسبقاً'; return;
-        }
+        if (registrations.some(r => r.civilId === cid)) { alertEl.className='alert alert-error'; alertEl.textContent='⚠️ الرقم المدني مسجل مسبقاً'; return; }
 
-        const isPriority = cd !== 'لا يوجد';
         const record = {
-            id: Date.now(), fullName: fn, civilId: cid, phone: ph,
-            gestationalAge: ga, healthCenter: hc, chronicDisease: cd, isPriority,
+            id: Date.now(), fullName: fn, civilId: cid, phone: ph, gestationalAge: ga, healthCenter: hc, chronicDisease: cd,
+            isPriority: cd !== 'لا يوجد',
             registeredAt: new Date().toLocaleString('ar-SA', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' }),
             timestamp: Date.now()
         };
 
-        registrations.unshift(record);
-        saveData();
+        registrations.unshift(record); saveData();
         const ok = await sendToGoogleSheets(record);
-
         alertEl.className = 'alert alert-success';
-        alertEl.textContent = ok ? '✅ تم التسجيل وإرسال البيانات!' : '✅ تم التسجيل محلياً (تأكدي من Google Sheets)';
+        alertEl.textContent = ok ? '✅ تم التسجيل وإرسال البيانات!' : '✅ تم التسجيل محلياً';
         document.getElementById('registrationForm').reset();
         document.getElementById('otherCenterInput').style.display = 'none';
         showToast('🎉 تم تسجيلك بنجاح!');
         setTimeout(() => alertEl.style.display = 'none', 7000);
     });
 
-    // ============ NURSES TABLE ============
     function renderNursesTable() {
         loadData();
         const s = document.getElementById('searchInput')?.value.trim().toLowerCase() || '';
@@ -626,56 +566,41 @@
         f.sort((a,b) => (b.isPriority - a.isPriority) || (b.timestamp - a.timestamp));
 
         document.getElementById('statTotal').textContent = registrations.length;
-        document.getElementById('statPriority').textContent = registrations.filter(r => r.isPriority).length;
-        document.getElementById('statNormal').textContent = registrations.filter(r => !r.isPriority).length;
+        document.getElementById('statPriority').textContent = registrations.filter(r=>r.isPriority).length;
+        document.getElementById('statNormal').textContent = registrations.filter(r=>!r.isPriority).length;
         const today = new Date().toLocaleDateString('ar-SA');
-        document.getElementById('statToday').textContent = registrations.filter(r => new Date(r.timestamp).toLocaleDateString('ar-SA') === today).length;
+        document.getElementById('statToday').textContent = registrations.filter(r=>new Date(r.timestamp).toLocaleDateString('ar-SA')===today).length;
 
         const tbody = document.getElementById('tableBody');
-        if (f.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="8" class="empty-state"><span class="empty-icon">📭</span>${s ? 'لا توجد نتائج' : 'لا توجد تسجيلات'}</td></tr>`;
-            return;
-        }
+        if (f.length===0) { tbody.innerHTML = `<tr><td colspan="8" class="empty-state"><span class="empty-icon">📭</span>${s?'لا توجد نتائج':'لا توجد تسجيلات'}</td></tr>`; return; }
         tbody.innerHTML = f.map(r => {
-            const pc = r.isPriority ? 'row-priority' : '';
-            const badge = r.isPriority ? '<span class="priority-badge priority-high">🔴 أولوية</span>' : '<span class="priority-badge priority-normal">🟢 طبيعي</span>';
+            const pc = r.isPriority?'row-priority':'';
+            const badge = r.isPriority?'<span class="priority-badge priority-high">🔴 أولوية</span>':'<span class="priority-badge priority-normal">🟢 طبيعي</span>';
             return `<tr class="${pc}"><td>${badge}</td><td><strong>${esc(r.fullName)}</strong></td><td>${esc(r.civilId)}</td><td>${esc(r.phone)}</td><td>${esc(r.gestationalAge)}</td><td>${esc(r.healthCenter)}</td><td>${esc(r.chronicDisease)}</td><td style="font-size:0.75rem;white-space:nowrap;">${r.registeredAt}</td></tr>`;
         }).join('');
     }
-    function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+    function esc(s) { const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
 
-    // ============ PWA ============
+    // PWA
     let deferredPrompt;
     const installBtn = document.getElementById('installButton');
-    window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; installBtn.style.display = 'flex'; });
-    installBtn.addEventListener('click', async () => {
-        if (deferredPrompt) { deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; installBtn.style.display = 'none'; }
-    });
-    window.addEventListener('appinstalled', () => { installBtn.style.display = 'none'; });
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
-    }
+    window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; installBtn.style.display='flex'; });
+    installBtn.addEventListener('click', async () => { if(deferredPrompt){ deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null; installBtn.style.display='none'; } });
+    window.addEventListener('appinstalled', ()=>{ installBtn.style.display='none'; });
+    if('serviceWorker' in navigator){ window.addEventListener('load', ()=>navigator.serviceWorker.register('sw.js')); }
 
-    // ============ INIT ============
-    loadData();
-    updateUIForAuth();
-
-    // بيانات تجريبية
-    if (registrations.length === 0) {
+    // Init
+    loadData(); updateUIForAuth();
+    if(registrations.length===0){
         const demos = [
             { n:'فاطمة أحمد', c:'12345678', p:'05123456', g:'4-6', h:'مستشفى بديه', ch:'سكري' },
             { n:'مريم خالد', c:'23456789', p:'05234567', g:'10-12', h:'مركز صحي الظاهر', ch:'لا يوجد' },
             { n:'نورة سعيد', c:'1234567', p:'05345678', g:'7-9', h:'عيادة خاصة', ch:'ضغط الدم' },
         ];
-        demos.forEach((d,i) => {
-            registrations.push({
-                id: Date.now()-i*6e4, fullName:d.n, civilId:d.c, phone:d.p,
-                gestationalAge:d.g, healthCenter:d.h, chronicDisease:d.ch,
-                isPriority:d.ch!=='لا يوجد',
-                registeredAt: new Date(Date.now()-i*36e5).toLocaleString('ar-SA',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}),
-                timestamp: Date.now()-i*36e5
-            });
-        });
+        demos.forEach((d,i) => { registrations.push({
+            id: Date.now()-i*6e4, fullName:d.n, civilId:d.c, phone:d.p, gestationalAge:d.g, healthCenter:d.h, chronicDisease:d.ch,
+            isPriority:d.ch!=='لا يوجد', registeredAt: new Date(Date.now()-i*36e5).toLocaleString('ar-SA',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}), timestamp: Date.now()-i*36e5
+        }); });
         saveData();
     }
 </script>
