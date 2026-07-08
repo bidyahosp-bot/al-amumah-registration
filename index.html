@@ -64,7 +64,7 @@
             justify-content: center;
         }
         .header .logo-img {
-            height: 70px;  /* ✅ تم تكبير الشعار */
+            height: 70px;
             width: auto;
             flex-shrink: 0;
         }
@@ -111,7 +111,7 @@
             box-shadow: var(--shadow);
             margin-bottom: 20px;
             position: sticky;
-            top: 95px;  /* ✅ تعديل ليتناسب مع حجم الهيدر الجديد */
+            top: 95px;
             z-index: 50;
         }
         .nav-tab {
@@ -313,8 +313,8 @@
             .nav-tab { font-size: 0.78rem; padding: 10px 6px; }
             .card { padding: 16px 14px; }
             .header { padding: 8px 12px; }
-            .header .logo-img { height: 55px; }  /* ✅ شعار أكبر للجوال */
-            .nav-tabs { top: 78px; }  /* ✅ تعديل للجوال */
+            .header .logo-img { height: 55px; }
+            .nav-tabs { top: 78px; }
         }
     </style>
 </head>
@@ -392,7 +392,7 @@
             <form id="registrationForm" autocomplete="off">
                 <div class="form-group"><label>👤 الاسم الكامل</label><input type="text" id="fullName" placeholder="أدخلي اسمكِ الكامل" required></div>
                 <div class="form-group"><label>🆔 الرقم المدني</label><input type="text" id="civilId" placeholder="الرقم المدني (6-8 أرقام)" required maxlength="8" pattern="\d{6,8}" inputmode="numeric"></div>
-                <div class="form-group"><label>📱 رقم الهاتف</label><input type="tel" id="phone" placeholder="9xxxxxxxx" required maxlength="8" pattern="\d{8}" inputmode="numeric"></div>
+                <div class="form-group"><label>📱 رقم الهاتف</label><input type="tel" id="phone" placeholder="05xxxxxxxx" required maxlength="8" pattern="\d{8}" inputmode="numeric"></div>
                 <div class="form-group"><label>📅 العمر التقريبي للحمل</label><select id="gestationalAge" required><option value="">-- اختر --</option><option value="4-6">4-6 أسابيع</option><option value="7-9">7-9 أسابيع</option><option value="10-12">10-12 أسبوع</option><option value="13-16">13-16 أسبوع</option><option value="17+">أكثر من 17 أسبوع</option></select></div>
                 <div class="form-group"><label>🏥 المركز الصحي</label><select id="healthCenter" required onchange="toggleOtherCenter(this.value)"><option value="">-- اختر --</option><option value="مستشفى بديه">مستشفى بديه</option><option value="مركز صحي الظاهر">مركز صحي الظاهر</option><option value="مستشفى وادي بني خالد">مستشفى وادي بني خالد</option><option value="عيادة خاصة">عيادة خاصة</option><option value="أخرى">أخرى (مع الذكر)</option></select><input type="text" id="otherCenterInput" placeholder="اذكري اسم المركز الصحي" style="display:none;"></div>
                 <div class="form-group"><label>⚠️ أمراض مزمنة؟</label><select id="chronicDisease" required><option value="لا يوجد">لا يوجد</option><option>سكري</option><option>ضغط الدم</option><option>سكري وضغط</option><option>أمراض قلب</option><option>أمراض كلى</option><option>غدة درقية</option><option>أخرى</option></select></div>
@@ -423,7 +423,9 @@
             <div class="table-wrapper">
                 <table>
                     <thead><tr><th>الأولوية</th><th>الاسم</th><th>الرقم المدني</th><th>الهاتف</th><th>عمر الحمل</th><th>المركز</th><th>الأمراض المزمنة</th><th>وقت التسجيل</th></tr></thead>
-                    <tbody id="tableBody"></tbody>
+                    <tbody id="tableBody">
+                        <tr><td colspan="8" class="empty-state"><span class="empty-icon">📭</span>لا توجد تسجيلات بعد</td></tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -572,7 +574,7 @@
         document.getElementById('statToday').textContent = registrations.filter(r=>new Date(r.timestamp).toLocaleDateString('ar-SA')===today).length;
 
         const tbody = document.getElementById('tableBody');
-        if (f.length===0) { tbody.innerHTML = `<tr><td colspan="8" class="empty-state"><span class="empty-icon">📭</span>${s?'لا توجد نتائج':'لا توجد تسجيلات'}</td></tr>`; return; }
+        if (f.length===0) { tbody.innerHTML = `<tr><td colspan="8" class="empty-state"><span class="empty-icon">📭</span>${s?'لا توجد نتائج':'لا توجد تسجيلات بعد'}</td></tr>`; return; }
         tbody.innerHTML = f.map(r => {
             const pc = r.isPriority?'row-priority':'';
             const badge = r.isPriority?'<span class="priority-badge priority-high">🔴 أولوية</span>':'<span class="priority-badge priority-normal">🟢 طبيعي</span>';
@@ -589,20 +591,8 @@
     window.addEventListener('appinstalled', ()=>{ installBtn.style.display='none'; });
     if('serviceWorker' in navigator){ window.addEventListener('load', ()=>navigator.serviceWorker.register('sw.js')); }
 
-    // Init
+    // Init - بدون بيانات تجريبية
     loadData(); updateUIForAuth();
-    if(registrations.length===0){
-        const demos = [
-            { n:'فاطمة أحمد', c:'12345678', p:'05123456', g:'4-6', h:'مستشفى بديه', ch:'سكري' },
-            { n:'مريم خالد', c:'23456789', p:'05234567', g:'10-12', h:'مركز صحي الظاهر', ch:'لا يوجد' },
-            { n:'نورة سعيد', c:'1234567', p:'05345678', g:'7-9', h:'عيادة خاصة', ch:'ضغط الدم' },
-        ];
-        demos.forEach((d,i) => { registrations.push({
-            id: Date.now()-i*6e4, fullName:d.n, civilId:d.c, phone:d.p, gestationalAge:d.g, healthCenter:d.h, chronicDisease:d.ch,
-            isPriority:d.ch!=='لا يوجد', registeredAt: new Date(Date.now()-i*36e5).toLocaleString('ar-SA',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}), timestamp: Date.now()-i*36e5
-        }); });
-        saveData();
-    }
 </script>
 </body>
 </html>
