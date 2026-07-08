@@ -31,6 +31,8 @@
             --danger-light: #fde8ec;
             --warning: #e0a458;
             --warning-light: #fdf8f0;
+            --info: #5b9bd5;
+            --info-light: #edf4fb;
             --shadow: 0 2px 16px rgba(120, 90, 120, 0.07);
             --shadow-lg: 0 8px 40px rgba(120, 90, 120, 0.10);
             --radius: 16px;
@@ -104,6 +106,7 @@
         .icon-purple { background: var(--primary-light); color: var(--primary); }
         .icon-green { background: var(--green-light); color: var(--green); }
         .icon-pink { background: var(--accent-light); color: var(--accent); }
+        .icon-info { background: var(--info-light); color: var(--info); }
 
         .hero-banner {
             background: linear-gradient(135deg, #fdf6f9 0%, #f5f0f7 40%, #edf5f0 100%);
@@ -147,6 +150,7 @@
         .btn-sm { padding: 8px 18px; font-size: 0.8rem; width: auto; border-radius: 20px; }
         .btn-danger { background: var(--danger); color: #fff; width: auto; }
         .btn-warning { background: var(--warning); color: #fff; width: auto; }
+        .btn-info { background: var(--info); color: #fff; width: auto; }
         .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
 
         .alert {
@@ -155,6 +159,7 @@
         }
         .alert-success { background: #e8f5ec; color: #2d6a3f; display: block; }
         .alert-error { background: #fde8ec; color: #b8404a; display: block; }
+        .alert-info { background: #eef3f8; color: #3a5a7c; display: block; }
 
         .modal-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
@@ -211,6 +216,11 @@
             background: var(--primary); color: #fff; border: none; padding: 12px 20px;
             border-radius: 30px; font-weight: 700; cursor: pointer; display: none; align-items: center; gap: 8px;
         }
+        .loading-spinner {
+            display: inline-block; width: 16px; height: 16px; border: 2px solid #fff;
+            border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         @media (max-width: 500px) {
             .hero-banner h2 { font-size: 1.25rem; }
@@ -310,8 +320,11 @@
                 <span class="icon icon-purple">👩‍⚕️</span>
                 لوحة التحكم
                 <div class="btn-group" style="margin-right:auto;">
-                    <button class="btn btn-outline btn-sm" onclick="forceRefresh()" title="تحديث البيانات">🔄 تحديث</button>
-                    <button class="btn btn-warning btn-sm" onclick="clearAllCache()" title="مسح الكاش وإعادة تحميل الصفحة">🗑️ مسح الكاش</button>
+                    <button class="btn btn-outline btn-sm" onclick="forceRefresh()" title="تحديث البيانات المحلية">🔄 تحديث</button>
+                    <button class="btn btn-info btn-sm" onclick="fetchFromGoogleSheets()" id="btnFetchSheets" title="تحميل البيانات من Google Sheets">
+                        ☁️ تحميل من Sheets
+                    </button>
+                    <button class="btn btn-warning btn-sm" onclick="clearAllCache()" title="مسح الكاش">🗑️ مسح الكاش</button>
                     <button class="btn btn-danger btn-sm" onclick="handleLogout()">🚪 خروج</button>
                 </div>
             </div>
@@ -341,12 +354,14 @@
 
 <script>
     // ============ CONFIGURATION ============
+    // استبدلي هذا الرابط برابط تطبيق Google Apps Script الخاص بك
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwG6PF3D4AKxeGMjMDjhNbu_5YDIWuWqo9GmgcX5jo-BiA_lmj5FnsTV757UqrrpXYB/exec';
     const STORAGE_KEY = 'moh_pregnancy_registrations';
     const AUTH_KEY = 'moh_nurse_authenticated';
     const VALID_PASSWORD = 'nurse123';
 
     let registrations = [];
+    let isFetchingSheets = false;
 
     function loadData() { 
         try { registrations = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } 
@@ -426,44 +441,104 @@
         else { inp.style.display = 'none'; inp.removeAttribute('required'); inp.value = ''; }
     }
 
-    // ✅ دالة التحديث الفوري
     function forceRefresh() {
         loadData();
         renderNursesTable();
         showToast('✅ تم تحديث البيانات');
     }
 
-    // ✅ دالة مسح الكاش وإعادة التحميل
+    // ✅ دالة جلب البيانات من Google Sheets
+    async function fetchFromGoogleSheets() {
+        const btn = document.getElementById('btnFetchSheets');
+        
+        if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) {
+            showToast('⚠️ لم يتم تكوين رابط Google Sheets بعد');
+            return;
+        }
+
+        if (isFetchingSheets) return;
+        isFetchingSheets = true;
+        
+        // إظهار حالة التحميل
+        btn.disabled = true;
+        btn.innerHTML = '<span class="loading-spinner"></span> جاري التحميل...';
+        showToast('☁️ جاري تحميل البيانات من Google Sheets...');
+
+        try {
+            const response = await fetch(GOOGLE_SCRIPT_URL);
+            const data = await response.json();
+            
+            if (data.success && data.records) {
+                // تحويل البيانات إلى تنسيق التطبيق
+                const sheetRecords = data.records.map((row, index) => ({
+                    id: Date.now() + index,
+                    fullName: row.fullName || '',
+                    civilId: row.civilId || '',
+                    phone: row.phone || '',
+                    gestationalAge: row.gestationalAge || '',
+                    healthCenter: row.healthCenter || '',
+                    chronicDisease: row.chronicDisease || '',
+                    isPriority: row.isPriority === true || row.isPriority === 'نعم',
+                    registeredAt: row.registeredAt || '',
+                    timestamp: Date.now() - index * 1000
+                }));
+
+                // دمج مع البيانات المحلية (تجنب التكرار باستخدام civilId)
+                loadData();
+                const existingIds = new Set(registrations.map(r => r.civilId));
+                const newRecords = sheetRecords.filter(r => !existingIds.has(r.civilId));
+                
+                if (newRecords.length > 0) {
+                    registrations = [...newRecords, ...registrations];
+                    saveData();
+                    showToast(`✅ تم تحميل ${newRecords.length} تسجيل جديد من Google Sheets`);
+                } else {
+                    showToast('✅ جميع البيانات موجودة مسبقاً');
+                }
+                
+                renderNursesTable();
+            } else {
+                showToast('⚠️ لم يتم العثور على بيانات في Google Sheets');
+            }
+        } catch (error) {
+            console.error('خطأ في جلب البيانات:', error);
+            showToast('❌ فشل الاتصال بـ Google Sheets');
+        } finally {
+            isFetchingSheets = false;
+            btn.disabled = false;
+            btn.innerHTML = '☁️ تحميل من Sheets';
+        }
+    }
+
     function clearAllCache() {
-        // مسح localStorage
         localStorage.removeItem(STORAGE_KEY);
         registrations = [];
         
-        // إرسال رسالة لـ Service Worker لمسح الكاش
         if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
             navigator.serviceWorker.controller.postMessage('clearCache');
         }
         
-        // مسح كاش المتصفح العام
         if ('caches' in window) {
             caches.keys().then(cacheNames => {
                 return Promise.all(cacheNames.map(name => caches.delete(name)));
-            }).then(() => {
-                console.log('🗑️ تم مسح جميع الكاش');
             });
         }
         
         showToast('🗑️ تم مسح الكاش، جاري إعادة التحميل...');
-        
-        // إعادة تحميل الصفحة بعد ثانية
-        setTimeout(() => {
-            window.location.reload(true);
-        }, 1000);
+        setTimeout(() => { window.location.reload(true); }, 1000);
     }
 
     async function sendToGoogleSheets(record) {
         if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) return false;
-        try { await fetch(GOOGLE_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(record) }); return true; }
+        try { 
+            await fetch(GOOGLE_SCRIPT_URL, { 
+                method:'POST', 
+                mode:'no-cors', 
+                headers:{'Content-Type':'application/json'}, 
+                body:JSON.stringify(record) 
+            }); 
+            return true; 
+        }
         catch(e) { return false; }
     }
 
