@@ -1,10 +1,11 @@
-const CACHE_NAME = 'moh-pregnancy-v1';
+const CACHE_NAME = 'moh-pregnancy-v2';
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll([
       '.',
       'index.html',
       'manifest.json',
+      'logo.png',
       'icon-192.png',
       'icon-512.png'
     ]))
