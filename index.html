@@ -29,6 +29,8 @@
             --border: #e8e3e8;
             --danger: #d4787e;
             --danger-light: #fde8ec;
+            --warning: #e0a458;
+            --warning-light: #fdf8f0;
             --shadow: 0 2px 16px rgba(120, 90, 120, 0.07);
             --shadow-lg: 0 8px 40px rgba(120, 90, 120, 0.10);
             --radius: 16px;
@@ -48,162 +50,70 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* ============ HEADER ============ */
         .header {
-            background: var(--white);
-            border-bottom: 1px solid var(--border);
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 1px 8px rgba(0,0,0,0.04);
-            flex-wrap: wrap;
-            justify-content: center;
+            background: var(--white); border-bottom: 1px solid var(--border);
+            padding: 10px 20px; display: flex; align-items: center; gap: 16px;
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 1px 8px rgba(0,0,0,0.04); flex-wrap: wrap; justify-content: center;
         }
-        .header .logo-img {
-            height: 70px;
-            width: auto;
-            flex-shrink: 0;
-        }
+        .header .logo-img { height: 70px; width: auto; flex-shrink: 0; }
         .header .initiative-tag {
-            background: var(--primary-light);
-            color: var(--primary);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            white-space: nowrap;
+            background: var(--primary-light); color: var(--primary);
+            padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.85rem;
         }
         .header .logout-btn-header {
-            margin-right: auto;
-            background: var(--danger-light);
-            color: var(--danger);
-            border: none;
-            padding: 6px 14px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: var(--font);
-            font-weight: 600;
-            font-size: 0.8rem;
-            display: none;
-            align-items: center;
-            gap: 4px;
+            margin-right: auto; background: var(--danger-light); color: var(--danger);
+            border: none; padding: 6px 14px; border-radius: 20px; cursor: pointer;
+            font-family: var(--font); font-weight: 600; font-size: 0.8rem;
+            display: none; align-items: center; gap: 4px;
         }
         .header .logout-btn-header.show { display: flex; }
 
-        /* ============ MAIN CONTAINER ============ */
-        .container {
-            max-width: 780px;
-            margin: 0 auto;
-            padding: 16px 16px 40px;
-        }
+        .container { max-width: 780px; margin: 0 auto; padding: 16px 16px 40px; }
 
-        /* ============ NAVIGATION TABS ============ */
         .nav-tabs {
-            display: flex;
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 5px;
-            gap: 4px;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-            position: sticky;
-            top: 95px;
-            z-index: 50;
+            display: flex; background: var(--white); border-radius: var(--radius);
+            padding: 5px; gap: 4px; box-shadow: var(--shadow); margin-bottom: 20px;
+            position: sticky; top: 95px; z-index: 50;
         }
         .nav-tab {
-            flex: 1;
-            padding: 11px 10px;
-            border: none;
-            background: transparent;
-            border-radius: 12px;
-            cursor: pointer;
-            font-family: var(--font);
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-light);
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            white-space: nowrap;
+            flex: 1; padding: 11px 10px; border: none; background: transparent;
+            border-radius: 12px; cursor: pointer; font-family: var(--font); font-weight: 600;
+            font-size: 0.9rem; color: var(--text-light); transition: var(--transition);
+            display: flex; align-items: center; justify-content: center; gap: 6px;
         }
-        .nav-tab.active {
-            background: var(--primary);
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(123,92,122,0.3);
-        }
-        .nav-tab:hover:not(.active) {
-            background: var(--primary-light);
-            color: var(--primary);
-        }
-        .nav-tab .tab-icon { font-size: 1.1rem; }
+        .nav-tab.active { background: var(--primary); color: #fff; box-shadow: 0 4px 14px rgba(123,92,122,0.3); }
+        .nav-tab:hover:not(.active) { background: var(--primary-light); color: var(--primary); }
 
-        /* ============ PAGES ============ */
-        .page {
-            display: none;
-            animation: fadeSlideIn 0.35s ease;
-        }
+        .page { display: none; animation: fadeSlideIn 0.35s ease; }
         .page.active { display: block; }
-        @keyframes fadeSlideIn {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* ============ CARDS ============ */
         .card {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 24px 20px;
-            margin-bottom: 16px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            transition: var(--transition);
+            background: var(--white); border-radius: var(--radius); padding: 24px 20px;
+            margin-bottom: 16px; box-shadow: var(--shadow); border: 1px solid var(--border);
         }
         .card-header {
-            font-weight: 700;
-            font-size: 1.15rem;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--primary);
+            font-weight: 700; font-size: 1.15rem; margin-bottom: 12px;
+            display: flex; align-items: center; gap: 10px; color: var(--primary); flex-wrap: wrap;
         }
         .card-header .icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            flex-shrink: 0;
+            width: 38px; height: 38px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
         }
         .icon-purple { background: var(--primary-light); color: var(--primary); }
         .icon-green { background: var(--green-light); color: var(--green); }
-        .icon-gold { background: var(--gold-light); color: var(--gold); }
         .icon-pink { background: var(--accent-light); color: var(--accent); }
 
         .hero-banner {
             background: linear-gradient(135deg, #fdf6f9 0%, #f5f0f7 40%, #edf5f0 100%);
-            border-radius: var(--radius);
-            padding: 28px 22px;
-            text-align: center;
-            margin-bottom: 16px;
-            border: 2px dashed var(--accent);
-            position: relative;
-            overflow: hidden;
+            border-radius: var(--radius); padding: 28px 22px; text-align: center;
+            margin-bottom: 16px; border: 2px dashed var(--accent);
         }
-        .hero-banner h2 { font-size: 1.5rem; color: var(--primary); margin-bottom: 8px; position: relative; z-index: 1; }
-        .hero-banner p { color: var(--text-light); font-size: 0.95rem; position: relative; z-index: 1; }
+        .hero-banner h2 { font-size: 1.5rem; color: var(--primary); margin-bottom: 8px; }
         .hero-banner .highlight-badge {
             display: inline-block; background: var(--white); color: var(--green);
-            padding: 5px 14px; border-radius: 20px; font-weight: 700; font-size: 0.8rem;
-            margin-top: 10px; position: relative; z-index: 1;
+            padding: 5px 14px; border-radius: 20px; font-weight: 700; font-size: 0.8rem; margin-top: 10px;
         }
 
         .benefits-grid {
@@ -220,7 +130,7 @@
         .form-group input, .form-group select {
             width: 100%; padding: 13px 16px; border: 2px solid var(--border);
             border-radius: var(--radius-sm); font-family: var(--font); font-size: 0.95rem;
-            background: #fdfcfd; color: var(--text); transition: var(--transition);
+            background: #fdfcfd; color: var(--text);
         }
         .form-group input:focus, .form-group select:focus {
             outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(123,92,122,0.06);
@@ -236,6 +146,8 @@
         .btn-outline { background: var(--white); color: var(--primary); border: 2px solid var(--primary); width: auto; }
         .btn-sm { padding: 8px 18px; font-size: 0.8rem; width: auto; border-radius: 20px; }
         .btn-danger { background: var(--danger); color: #fff; width: auto; }
+        .btn-warning { background: var(--warning); color: #fff; width: auto; }
+        .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
 
         .alert {
             padding: 12px 16px; border-radius: var(--radius-sm); font-weight: 500;
@@ -244,7 +156,6 @@
         .alert-success { background: #e8f5ec; color: #2d6a3f; display: block; }
         .alert-error { background: #fde8ec; color: #b8404a; display: block; }
 
-        /* ============ MODAL ============ */
         .modal-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0,0,0,0.5); z-index: 500;
@@ -256,21 +167,14 @@
             max-width: 400px; width: 100%; text-align: center;
             box-shadow: 0 20px 60px rgba(0,0,0,0.2); animation: modalPop 0.3s ease;
         }
-        @keyframes modalPop {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
+        @keyframes modalPop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .modal .modal-icon { font-size: 3rem; margin-bottom: 10px; }
         .modal h3 { color: var(--primary); margin-bottom: 6px; }
-        .modal p { color: var(--text-light); font-size: 0.85rem; margin-bottom: 18px; }
-        .modal .form-group { text-align: right; }
-        .modal .btn { margin-top: 8px; }
         .modal .btn-close {
             background: none; border: none; color: var(--text-light); cursor: pointer;
             font-size: 0.85rem; margin-top: 12px; text-decoration: underline;
         }
 
-        /* ============ NURSES TABLE ============ */
         .search-bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
         .search-bar input {
             flex: 1; min-width: 180px; padding: 12px 16px;
@@ -322,14 +226,12 @@
 
 <button id="installButton" class="install-btn">📲 تثبيت التطبيق</button>
 
-<!-- ==================== HEADER ==================== -->
 <header class="header">
     <img src="logo.png" alt="وزارة الصحة" class="logo-img" onerror="this.style.display='none';">
     <span class="initiative-tag">🌿 مبادرة التسجيل المبكر للحمل</span>
     <button class="logout-btn-header" id="logoutBtnHeader" onclick="handleLogout()">🚪 خروج</button>
 </header>
 
-<!-- ==================== MODAL ==================== -->
 <div class="modal-overlay" id="passwordModal">
     <div class="modal">
         <div class="modal-icon">🔐</div>
@@ -350,7 +252,6 @@
     </div>
 </div>
 
-<!-- ==================== MAIN CONTAINER ==================== -->
 <div class="container">
     <nav class="nav-tabs" role="tablist">
         <button class="nav-tab active" data-page="home">🏠 الرئيسية</button>
@@ -377,9 +278,9 @@
         <div class="card">
             <div class="card-header"><span class="icon icon-purple">📋</span> كيف تتم العملية؟</div>
             <div style="display:flex;flex-direction:column;gap:12px;">
-                <div style="display:flex;align-items:center;gap:12px;"><span style="background:var(--primary-light);color:var(--primary);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;">1</span> املئي نموذج التسجيل السريع</div>
-                <div style="display:flex;align-items:center;gap:12px;"><span style="background:var(--primary-light);color:var(--primary);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;">2</span> تتواصل معكِ ممرضة العيادة</div>
-                <div style="display:flex;align-items:center;gap:12px;"><span style="background:var(--primary-light);color:var(--primary);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;">3</span> تجهيز الفحوصات مسبقاً</div>
+                <div>1️⃣ املئي نموذج التسجيل السريع</div>
+                <div>2️⃣ تتواصل معكِ ممرضة العيادة</div>
+                <div>3️⃣ تجهيز الفحوصات مسبقاً</div>
             </div>
         </div>
         <button class="btn btn-primary" onclick="switchTab('register')">✨ سجّلي حملكِ الآن</button>
@@ -407,8 +308,12 @@
         <div class="card">
             <div class="card-header">
                 <span class="icon icon-purple">👩‍⚕️</span>
-                لوحة التحكم - متابعة التسجيلات
-                <button class="btn btn-danger btn-sm" onclick="handleLogout()" style="margin-right:auto;">🚪 خروج</button>
+                لوحة التحكم
+                <div class="btn-group" style="margin-right:auto;">
+                    <button class="btn btn-outline btn-sm" onclick="forceRefresh()" title="تحديث البيانات">🔄 تحديث</button>
+                    <button class="btn btn-warning btn-sm" onclick="clearAllCache()" title="مسح الكاش وإعادة تحميل الصفحة">🗑️ مسح الكاش</button>
+                    <button class="btn btn-danger btn-sm" onclick="handleLogout()">🚪 خروج</button>
+                </div>
             </div>
             <div class="stats-row">
                 <span class="stat-chip">📋 الكل: <span class="stat-num" id="statTotal">0</span></span>
@@ -418,7 +323,6 @@
             </div>
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="🔍 بحث بالاسم أو الرقم المدني..." oninput="renderNursesTable()">
-                <button class="btn btn-outline btn-sm" onclick="renderNursesTable()">تحديث</button>
             </div>
             <div class="table-wrapper">
                 <table>
@@ -444,7 +348,10 @@
 
     let registrations = [];
 
-    function loadData() { try { registrations = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e) { registrations = []; } }
+    function loadData() { 
+        try { registrations = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } 
+        catch(e) { registrations = []; } 
+    }
     function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(registrations)); }
 
     function isAuthenticated() { return sessionStorage.getItem(AUTH_KEY) === 'true'; }
@@ -519,6 +426,41 @@
         else { inp.style.display = 'none'; inp.removeAttribute('required'); inp.value = ''; }
     }
 
+    // ✅ دالة التحديث الفوري
+    function forceRefresh() {
+        loadData();
+        renderNursesTable();
+        showToast('✅ تم تحديث البيانات');
+    }
+
+    // ✅ دالة مسح الكاش وإعادة التحميل
+    function clearAllCache() {
+        // مسح localStorage
+        localStorage.removeItem(STORAGE_KEY);
+        registrations = [];
+        
+        // إرسال رسالة لـ Service Worker لمسح الكاش
+        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+            navigator.serviceWorker.controller.postMessage('clearCache');
+        }
+        
+        // مسح كاش المتصفح العام
+        if ('caches' in window) {
+            caches.keys().then(cacheNames => {
+                return Promise.all(cacheNames.map(name => caches.delete(name)));
+            }).then(() => {
+                console.log('🗑️ تم مسح جميع الكاش');
+            });
+        }
+        
+        showToast('🗑️ تم مسح الكاش، جاري إعادة التحميل...');
+        
+        // إعادة تحميل الصفحة بعد ثانية
+        setTimeout(() => {
+            window.location.reload(true);
+        }, 1000);
+    }
+
     async function sendToGoogleSheets(record) {
         if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('YOUR_SCRIPT_ID')) return false;
         try { await fetch(GOOGLE_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(record) }); return true; }
@@ -578,7 +520,7 @@
         tbody.innerHTML = f.map(r => {
             const pc = r.isPriority?'row-priority':'';
             const badge = r.isPriority?'<span class="priority-badge priority-high">🔴 أولوية</span>':'<span class="priority-badge priority-normal">🟢 طبيعي</span>';
-            return `<tr class="${pc}"><td>${badge}</td><td><strong>${esc(r.fullName)}</strong></td><td>${esc(r.civilId)}</td><td>${esc(r.phone)}</td><td>${esc(r.gestationalAge)}</td><td>${esc(r.healthCenter)}</td><td>${esc(r.chronicDisease)}</td><td style="font-size:0.75rem;white-space:nowrap;">${r.registeredAt}</td></tr>`;
+            return `<tr class="${pc}"><td>${badge}</td><td><strong>${esc(r.fullName)}</strong></td><td>${esc(r.civilId)}</td><td>${esc(r.phone)}</td><td>${esc(r.gestationalAge)}</td><td>${esc(r.healthCenter)}</td><td>${esc(r.chronicDisease)}</td><td>${r.registeredAt}</td></tr>`;
         }).join('');
     }
     function esc(s) { const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
@@ -591,7 +533,7 @@
     window.addEventListener('appinstalled', ()=>{ installBtn.style.display='none'; });
     if('serviceWorker' in navigator){ window.addEventListener('load', ()=>navigator.serviceWorker.register('sw.js')); }
 
-    // Init - بدون بيانات تجريبية
+    // Init
     loadData(); updateUIForAuth();
 </script>
 </body>
